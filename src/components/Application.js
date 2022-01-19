@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+// import useState Hook
 import "components/Application.scss";
 import DayList from "components/DayList"
 //import the DayList component into Application.js
@@ -23,6 +24,8 @@ const days = [
 ];
 
 export default function Application(props) {
+  const [day, setDay] = useState("Monday");
+  // Set default state to "Monday"
   return (
     <main className="layout">
       <section className="sidebar">
@@ -35,8 +38,10 @@ export default function Application(props) {
         <nav className="sidebar__menu">
           <DayList
             days={days}
-            day={"Monday"}
-            setDay={day => console.log(day)}
+            day={day}
+            // The <DayList> component should receive the value represented by the state
+            setDay={setDay}
+            // The <DayList> component should also receive the function that can update the state
           />
         </nav>
         <img
