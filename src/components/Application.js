@@ -26,6 +26,10 @@ const days = [
 export default function Application(props) {
   const [day, setDay] = useState("Monday");
   // Set default state to "Monday"
+
+  console.log(day);
+  // changes once we click on a certain day
+
   return (
     <main className="layout">
       <section className="sidebar">
