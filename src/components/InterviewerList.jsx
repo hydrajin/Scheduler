@@ -8,6 +8,7 @@ interviewer:number - a number that represents the id of the currently selected i
 export default function InterviewerList(props) {
   const { interviewers } = props;
   const parsedInterviewers = interviewers.map((interviewer) => (
+    // const interviewers = props.interviewers.map((interviewer) => {
     // No need for return after .map()
     <InterviewerListItem
       key={interviewer.id}
