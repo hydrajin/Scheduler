@@ -42,10 +42,10 @@ export default function Application(props) {
         <nav className="sidebar__menu">
           <DayList
             days={days}
-            day={day}
-            // The <DayList> component should receive the value represented by the state
-            setDay={setDay}
-            // The <DayList> component should also receive the function that can update the state
+            value={day}
+            // update the names of props (from day to value) to mimic standard HTML select list
+            onChange={setDay}
+            //  update the names of props (setDay to onChange) to mimic standard HTML select list
           />
         </nav>
         <img
