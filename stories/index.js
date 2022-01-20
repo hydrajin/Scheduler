@@ -12,6 +12,8 @@ import DayList from "components/DayList";
 import InterviewerListItem from "components/InterviewerListItem";
 //import InterviewerList
 import InterviewerList from "components/InterviewerList";
+// import Appointment from index.js (you don't need to add /index since its assumed by default)
+import Appointment from "components/Appointment";
 
 storiesOf("Button", module)
   .addParameters({
@@ -116,7 +118,7 @@ storiesOf("Button", module)
         { id: 5, name: "Sven Jones", avatar: "https://i.imgur.com/twYrpay.jpg" }
       ];
       
-      storiesOf("InterviewerList", module)
+    storiesOf("InterviewerList", module)
       .addParameters({
         backgrounds: [{ name: "dark", value: "#222f3e", default: true }]
       })
@@ -138,3 +140,11 @@ storiesOf("Button", module)
         />
       ));
       // Change stories to reflect onChange & value props name change
+
+      //! Writing a story (The Appointment Component)
+storiesOf("Appointment", module)
+  .addParameters({
+    backgrounds: [{ name: "white", value: "#fff", default: true }]
+  })
+  .add("Appointment", () => <Appointment />)
+  .add("Appointment with Time", () => <Appointment time="12pm" />);
