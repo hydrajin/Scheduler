@@ -18,6 +18,8 @@ import Appointment from "components/Appointment";
 import Header from "components/Appointment/Header";
 // import Empty from Appointment
 import Empty from "components/Appointment/Empty";
+// import Show from Appointment
+import Show from "components/Appointment/Show";
 
 storiesOf("Button", module)
   .addParameters({
@@ -153,5 +155,16 @@ storiesOf("DayList", module)
     .add("Appointment", () => <Appointment />)
     .add("Appointment with Time", () => <Appointment time="12pm" />)
     .add("Header", () => <Header time="12pm" />)
-    .add("Empty", () => <Empty onAdd={action("onAdd")} />);
-    // Adding appointment "image" button click
+    .add("Empty", () => <Empty onAdd={action("onAdd")} />)
+    .add("Show", () => (
+      <Show
+        student={"Lydia Miller-Jones"}
+        interviewer={interviewer}
+        // Object that is already present above in index.js
+        onEdit={action("onEdit")}
+        // Function to be called (callback) when user clicks the Edit button
+        onDelete={action("onDelete")}
+        // Function to be called (callback) when user clicks the Delete button
+      />
+    ));
+   
