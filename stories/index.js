@@ -20,6 +20,8 @@ import Header from "components/Appointment/Header";
 import Empty from "components/Appointment/Empty";
 // import Show from Appointment
 import Show from "components/Appointment/Show";
+// import Confirm from Appointment
+import Confirm from "components/Appointment/Confirm";
 
 storiesOf("Button", module)
   .addParameters({
@@ -165,6 +167,11 @@ storiesOf("DayList", module)
         // Function to be called (callback) when user clicks the Edit button
         onDelete={action("onDelete")}
         // Function to be called (callback) when user clicks the Delete button
-      />
-    ));
+      />))
+      .add("Confirm", () => (
+      <Confirm 
+        message={"Delete the appointment?"}
+        onConfirm={action("onConfirm")}
+        onCancel={action("onCancel")}
+      />));
    
