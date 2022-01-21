@@ -195,7 +195,7 @@ storiesOf("DayList", module)
     ))
     .add("Create", () => (
       <Form
-        interviewer={interviewers}
+        interviewers={interviewers}
         onSave={action("onSave")}
         onCancel={action("onCancel")}
       />
