@@ -6,27 +6,6 @@ import DayList from "components/DayList"
 import Appointment from "components/Appointment";
 import axios from "axios";
 
-// add mock data from stories/index.js to Application.js
-/*
-const days = [
-  {
-    id: 1,
-    name: "Monday",
-    spots: 2,
-  },
-  {
-    id: 2,
-    name: "Tuesday",
-    spots: 5,
-  },
-  {
-    id: 3,
-    name: "Wednesday",
-    spots: 0,
-  },
-];
-*/
-
 // add mock data for appointments
 const appointments = [
   {
