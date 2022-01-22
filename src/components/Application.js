@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, axios, useEffect } from "react";
 // import useState Hook
 import "components/Application.scss";
 import DayList from "components/DayList"
