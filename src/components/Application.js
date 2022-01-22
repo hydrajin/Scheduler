@@ -1,11 +1,13 @@
-import React, { useState, axios, useEffect } from "react";
+import React, { useState,useEffect } from "react";
 // import useState Hook
 import "components/Application.scss";
 import DayList from "components/DayList"
 //import the DayList component into Application.js
 import Appointment from "components/Appointment";
+import axios from "axios";
 
 // add mock data from stories/index.js to Application.js
+/*
 const days = [
   {
     id: 1,
@@ -23,6 +25,7 @@ const days = [
     spots: 0,
   },
 ];
+*/
 
 // add mock data for appointments
 const appointments = [
@@ -65,10 +68,17 @@ const appointments = [
 ];
 
 export default function Application(props) {
-  const [day, setDay] = useState("Monday");
-  // Set default state to "Monday"
+  const [day, setDay] = useState("");
+  const [days, setDays] = useState([]);
+  // Set default state to "[]"
+  useEffect(() => {
+    const daysData = `http://localhost:8001/api/days`;
+    axios.get(daysData).then(response => {
+      setDays(response.data)
+  })
+}, []);
 
-  console.log(day);
+  // console.log(day);
   // changes once we click on a certain day
 
   return (
