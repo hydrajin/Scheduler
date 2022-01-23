@@ -57,21 +57,30 @@ export default function Application(props) {
 
   const dailyAppointments = [];
 
-  const setDays = (days) => {
+/* const setDays = (days) => {
    setState(prev => ({ ...prev, days }));
-  }
+  } */
+  // remove function 
   
   useEffect(() => {
-    const daysData = `http://localhost:8001/api/days`;
-    axios.get(daysData).then(response => {
-      setDays(response.data)
+    Promise.all([
+      axios.get(`http://localhost:8001/api/days`),
+      axios.get(`http://localhost:8001/api/appointments`),
+      axios.get(`http://localhost:8001/api/interviewers`)
+    ]).then((all) => {
+      console.log(all[0]); // first
+      console.log(all[1]); // second
+      console.log(all[2]); // third
     })
-  }, []);
+
+    const [first, second, third] = all;
+    // console.log(first, second, third);
+    console.log(all);
+  }); 
 
   // console.log(day);
   // changes once we click on a certain day
-
-  console.log("state", state.day);
+  // console.log("state", state.day);
 
   return (
     <main className="layout">
