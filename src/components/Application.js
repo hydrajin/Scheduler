@@ -7,7 +7,7 @@ import Appointment from "components/Appointment";
 import axios from "axios";
 
 // add mock data for appointments
-const appointments = [
+/* const appointments = [
   {
     id: 1,
     time: "12pm",
@@ -44,7 +44,7 @@ const appointments = [
     id: 5,
     time: "4pm",
   }
-];
+]; */
 
 export default function Application(props) {
   const setDay = day => setState({ ...state, day });
@@ -52,8 +52,10 @@ export default function Application(props) {
     day: "Monday",
     days: [],
     // you may put the line below, but will have to remove/comment hardcoded appointments variable
-    // appointments: {}
+    appointments: {}
   });
+
+  const dailyAppointments = [];
 
   const setDays = (days) => {
    setState(prev => ({ ...prev, days }));
@@ -96,7 +98,7 @@ export default function Application(props) {
         />
       </section>
       <section className="schedule">
-        {appointments.map((appointment) => (
+        {dailyAppointments.map((appointment) => (
           <Appointment key={appointment.id} {...appointment} />
         ))}
         <Appointment key="last" time="5pm" />
