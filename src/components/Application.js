@@ -47,18 +47,29 @@ const appointments = [
 ];
 
 export default function Application(props) {
-  const [day, setDay] = useState("");
-  const [days, setDays] = useState([]);
-  // Set default state to "[]"
+  const setDay = day => setState({ ...state, day });
+  const [state, setState] = useState({
+    day: "Monday",
+    days: [],
+    // you may put the line below, but will have to remove/comment hardcoded appointments variable
+    // appointments: {}
+  });
+
+  const setDays = (days) => {
+   setState(prev => ({ ...prev, days }));
+  }
+  
   useEffect(() => {
     const daysData = `http://localhost:8001/api/days`;
     axios.get(daysData).then(response => {
       setDays(response.data)
-  })
-}, []);
+    })
+  }, []);
 
   // console.log(day);
   // changes once we click on a certain day
+
+  console.log("state", state.day);
 
   return (
     <main className="layout">
@@ -71,8 +82,8 @@ export default function Application(props) {
         <hr className="sidebar__separator sidebar--centered" />
         <nav className="sidebar__menu">
           <DayList
-            days={days}
-            value={day}
+            days={state.days}
+            value={state.day}
             // update the names of props (from day to value) to mimic standard HTML select list
             onChange={setDay}
             //  update the names of props (setDay to onChange) to mimic standard HTML select list
