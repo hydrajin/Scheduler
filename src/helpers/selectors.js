@@ -34,7 +34,7 @@ export function getAppointmentsForDay(state, day) {
   const appointmentsArr = filteredDays[0].appointments;
   const numOfAppointments = []
   appointmentsArr.forEach(element => numOfAppointments.push(state.appointments[element]))
-  console.log(numOfAppointments);
+  // console.log(numOfAppointments);
   return numOfAppointments;
 }
 /* [
@@ -47,3 +47,34 @@ export function getAppointmentsForDay(state, day) {
       }
     ]
 */
+
+//! The function should return a new object containing the interview data when we pass it an object 
+// that contains the interviewer. Otherwise, the function should return null. The object it returns should look like this:
+
+/* {  
+  "student": "Lydia Miller-Jones",
+  "interviewer": {  
+    "id": 1,
+    "name": "Sylvia Palmer",
+    "avatar": "https://i.imgur.com/LpaY82x.png"
+  }
+} */
+
+/* state.interviewers EX. ->  
+interviewers: {
+    "1": {  
+      "id": 1,
+      "name": "Sylvia Palmer",
+      "avatar": "https://i.imgur.com/LpaY82x.png"
+   },
+*/
+// getInterview selector function
+
+export function getInterview(state, interview) {
+  //  console.log(state.interviewers);
+  if (!interview) {
+    return null;
+  }
+  //console.log(state.interviewers[interview.interviewer]); // ->  {id: 2, name: 'Tori Malcolm', avatar: 'https://i.imgur.com/Nmx0Qxo.png'}
+    return { student: interview.student, interviewer: state.interviewers[interview.interviewer] }
+}

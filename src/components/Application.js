@@ -72,27 +72,32 @@ export default function Application(props) {
       axios.get(`http://localhost:8001/api/interviewers`)
     ]).then((all) => {
       
-      console.log("DAY:",all[0]); // first
-      console.log(all[1]); // second
-      console.log(all[2]); // third
+      console.log("DAY:", all[0]); // first
+      console.log("APPOINTMENTS:", all[1]); // second
+      console.log("INTERVIEWERS:", all[2]); // third
  
 
     const [days, appointments, interviewers] = all;
     setState(prev => ({...prev, days: days.data, appointments: appointments.data, interviewers: interviewers.data }))
     // console.log(first, second, third);
-    console.log(all);
+    // console.log(all);
     })
   },[]);
 
   // console.log(day);
   // changes once we click on a certain day
-  // console.log("state", state.day);
+  // console.log("state.day", state.day);
+  console.log("state.interviewers", state.interviewers);
 
   dailyAppointments = getAppointmentsForDay(state, state.day) 
    const schedule = dailyAppointments.map((appointment) => (
+    // const interview = getInterview(state, appointment.interview);
           <Appointment 
             key={appointment.id}
+            id={appointment.id}
             {...appointment} 
+            // time={appointment.time}
+            // interview={interview}
           />
       ));
 
@@ -113,7 +118,7 @@ export default function Application(props) {
             value={state.day}
             // update the names of props (from day to value) to mimic standard HTML select list
             onChange={setDay}
-            //  update the names of props (setDay to onChange) to mimic standard HTML select list
+            // update the names of props (setDay to onChange) to mimic standard HTML select list
           />
         </nav>
         <img
@@ -124,7 +129,7 @@ export default function Application(props) {
       </section>
       <section className="schedule">
         {schedule}
-        {/* mapped schedule array from dailyAppointments  */}
+        {/* mapped schedule array from dailyAppointments outside of return */}
         <Appointment key="last" time="5pm" />
       </section>
     </main>
