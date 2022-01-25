@@ -78,3 +78,27 @@ export function getInterview(state, interview) {
   //console.log(state.interviewers[interview.interviewer]); // ->  {id: 2, name: 'Tori Malcolm', avatar: 'https://i.imgur.com/Nmx0Qxo.png'}
     return { student: interview.student, interviewer: state.interviewers[interview.interviewer] }
 }
+
+/*  In your selectors.  Two pointers:
+1, use find not filter to find the dayObj
+2. getInterviewersForDay is EXACTLY like  getAppointmentsforDay  with like 1 word changed.   
+Seriously, its the like same code.
+If yours looks different, you should probably go back and edit it. */
+
+export function getInterviewersForDay(state, day) {
+
+  if (state.days.length === 0) {
+    return [];
+  }
+  
+  const dayObj = state.days.find(weekday  => weekday.name === day);
+
+  if (!dayObj) {
+    return [];
+  }
+  
+  const appObj = dayObj.interviewers
+  const mappedDays = appObj.map((id) => state.interviewers[id])
+
+  return mappedDays;
+}
