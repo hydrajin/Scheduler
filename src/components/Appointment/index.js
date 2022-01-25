@@ -3,12 +3,14 @@ import Header from "./Header";
 import Show from "./Show";
 import Empty from "./Empty";
 import Form from "./Form";
+import Status from "./Status"
 import "./styles.scss";
 import useVisualMode from "hooks/useVisualMode";
 
 const EMPTY = "EMPTY";
 const SHOW = "SHOW";
 const CREATE = "CREATE";
+const SAVING = "SAVING";
 
 /* const appointments = [
   {
@@ -61,8 +63,12 @@ export default function Appointment(props) {
         student: name,
         interviewer
       };
+      // In the Appointment component update the save action to show the SAVING indicator before calling props.bookInterview.
+      transition(SAVING);
       props.bookInterview(props.id, interview)
-      transition(SHOW)
+      // only working with .then() returning a promise
+      // pesimistic updates, we show the user an indicator for progress
+      .then(() => transition(SHOW));
     }
 
   return (
@@ -70,6 +76,7 @@ export default function Appointment(props) {
       <Header time={props.time} />
       {/* {props.interview ? <Show {...props.interview} /> : <Empty/>} */}
       {/* ...spread should show student {props.interview.student} & interviewer {props.interview.interviewer} */}
+     
       {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
       {mode === SHOW && (
       <Show
@@ -77,8 +84,10 @@ export default function Appointment(props) {
         interviewer={props.interview.interviewer}
         />
       )}
+      {mode === SAVING && <Status message="Saving"/>}
       {/* {mode === CREATE && <Form onCancel={() => back(EMPTY)} />} */}
       {mode === CREATE && <Form onCancel={() => back(EMPTY)} onSave={save}  interviewers={props.interviewers} />}
+     
     </article>
   );
 }
