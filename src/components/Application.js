@@ -26,22 +26,6 @@ export default function Application(props) {
   } */
   // remove function 
   
-  const bookInterview = (id, interview) => {
-    console.log("id", id, interview);
-    const appointment = {
-      ...state.appointments[id],
-      interview: { ...interview }
-    };
-    const appointments = {
-      ...state.appointments,
-      [id]: appointment
-    };
-    setState({
-      ...state,
-      appointments
-    });
-  }
-
   useEffect(() => {
     Promise.all([
       axios.get(`http://localhost:8001/api/days`),
@@ -60,6 +44,25 @@ export default function Application(props) {
     // console.log(all);
     })
   },[]);
+
+  const bookInterview = (id, interview) => {
+    console.log("id", id, interview);
+    const appointment = {
+      ...state.appointments[id],
+      interview: { ...interview }
+    };
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+    // Within bookInterview, make a PUT request to the /api/appointments/:id endpoint
+    // to update the database with the interview data.
+    return axios.put(`http://localhost:8001/api/appointments/${id}`, {interview})
+      .then(response => console.log(response),  
+      setState({...state, appointments}))
+      .catch((err) => console.log(err));
+    }
+    // If you want to delete the record in the db ->  http://localhost:8001/api/debug/reset (In browser) or do a curl command
 
   // console.log(day);
   // changes once we click on a certain day
