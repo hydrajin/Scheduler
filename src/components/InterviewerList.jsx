@@ -6,9 +6,10 @@ setInterviewer:function - a function that accepts an interviewer id. This functi
 interviewer:number - a number that represents the id of the currently selected interviewer */
 
 export default function InterviewerList(props) {
-  const { interviewers } = props;
-  const parsedInterviewers = interviewers.map((interviewer) => (
-    // const interviewers = props.interviewers.map((interviewer) => {
+  // let { interviewers } = props;
+  //  const parsedInterviewers = interviewers.map((interviewer) => (
+  const interviewersProps = [];
+  const interviewers = interviewersProps.map((interviewer) => (
     // No need for return after .map()
     <InterviewerListItem
       key={interviewer.id}
@@ -23,7 +24,7 @@ export default function InterviewerList(props) {
   return (
     <section className="interviewers">
       <h4 className="interviewers__header text--light">Interviewer</h4>
-      <ul className="interviewers__list">{parsedInterviewers}</ul>
+      <ul className="interviewers__list">{interviewers}</ul>
     </section>
   );
 }
