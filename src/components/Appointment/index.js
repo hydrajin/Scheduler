@@ -11,6 +11,7 @@ const EMPTY = "EMPTY";
 const SHOW = "SHOW";
 const CREATE = "CREATE";
 const SAVING = "SAVING";
+const DELETING = "DELETING"
 
 /* const appointments = [
   {
@@ -56,7 +57,7 @@ export default function Appointment(props) {
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
     );
-
+    //! SAVE----------
     function save(name, interviewer) {
       console.log(name, interviewer);
       const interview = {
@@ -70,6 +71,12 @@ export default function Appointment(props) {
       // pesimistic updates, we show the user an indicator for progress
       .then(() => transition(SHOW));
     }
+    //! DELETE/CANCEL----------
+    function cancelInterview() {
+      transition(DELETING);
+      props.cancelInterview(props.id)
+      .then(() => transition(EMPTY))
+    }
 
   return (
     <article className="appointment">
@@ -82,12 +89,12 @@ export default function Appointment(props) {
       <Show
         student={props.interview.student}
         interviewer={props.interview.interviewer}
+        onDelete={cancelInterview}
         />
       )}
       {mode === SAVING && <Status message="Saving"/>}
-      {/* {mode === CREATE && <Form onCancel={() => back(EMPTY)} />} */}
-      {mode === CREATE && <Form onCancel={() => back(EMPTY)} onSave={save}  interviewers={props.interviewers} />}
-     
+      {mode === DELETING && <Status message="Deleting"/>}
+      {mode === CREATE && <Form onCancel={() => back(EMPTY)} onSave={save} interviewers={props.interviewers}/>}
     </article>
   );
 }

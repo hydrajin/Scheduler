@@ -45,6 +45,7 @@ export default function Application(props) {
     })
   },[]);
 
+//! BOOK INTERVIEW  -------------------------------------------------------
   const bookInterview = (id, interview) => {
     console.log("id", id, interview);
     const appointment = {
@@ -58,11 +59,32 @@ export default function Application(props) {
     // Within bookInterview, make a PUT request to the /api/appointments/:id endpoint
     // to update the database with the interview data.
     return axios.put(`http://localhost:8001/api/appointments/${id}`, {interview})
-      .then(response => console.log(response),  
+      .then(response => console.log("bookInterview", response),  
       setState({...state, appointments}))
       .catch((err) => console.log(err));
     }
     // If you want to delete the record in the db ->  http://localhost:8001/api/debug/reset (In browser) or do a curl command
+//! CANCEL INTERVIEW -------------------------------------------------------
+/* If we break this down into steps similar to our previous activity, 
+we should start by creating the main cancelInterview function in Application.js, 
+that will use the appointment id to find the right appointment slot and set it's interview data to null */
+const cancelInterview = (id, interview) => {
+  const appointment = {
+    ...state.appointments[id],
+    interview: null
+    // After we delete an Interview, we will need to have its value set to null (TypeError if not set)
+  };
+  const appointments = {
+    ...state.appointments,
+    [id]: appointment
+  };
+  // Within bookInterview, make a PUT request to the /api/appointments/:id endpoint
+  // to update the database with the interview data.
+  return axios.delete(`http://localhost:8001/api/appointments/${id}`)
+    .then(response => console.log("cancelInterview", response),  
+    setState({...state, appointments}))
+    .catch((err) => console.log(err));
+  }
 
   // console.log(day);
   // changes once we click on a certain day
@@ -80,9 +102,10 @@ export default function Application(props) {
             key={appointment.id}
             {...appointment}
             interviewers={interviewers}
-            bookInterview={bookInterview}
             time={appointment.time}
             interview={interview}
+            bookInterview={bookInterview}
+            cancelInterview={cancelInterview}
           />
         );
      });
