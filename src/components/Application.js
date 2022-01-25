@@ -6,47 +6,7 @@ import DayList from "components/DayList"
 import Appointment from "components/Appointment";
 import axios from "axios";
 // import getAppointmentsForDays helpers function
-import { getAppointmentsForDay } from "helpers/selectors";
-
-// add mock data for appointments
-/* const appointments = [
-  {
-    id: 1,
-    time: "12pm",
-  },
-  {
-    id: 2,
-    time: "1pm",
-    interview: {
-      student: "Lydia Miller-Jones",
-      interviewer:{
-        id: 3,
-        name: "Sylvia Palmer",
-        avatar: "https://i.imgur.com/LpaY82x.png",
-      }
-    }
-  },
-  {
-    id: 3,
-    time: "2pm",
-  },
-  {
-    id: 4,
-    time: "3pm",
-    interview: {
-      student: "Archie Andrews",
-      interviewer:{
-        id: 4,
-        name: "Cohana Roy",
-        avatar: "https://i.imgur.com/FK8V841.jpg",
-      }
-    }
-  },
-  {
-    id: 5,
-    time: "4pm",
-  }
-]; */
+import { getAppointmentsForDay, getInterviewersForDay, getInterview } from "helpers/selectors";
 
 
 export default function Application(props) {
@@ -55,16 +15,33 @@ export default function Application(props) {
     day: "Monday",
     days: [],
     // you may put the line below, but will have to remove/comment hardcoded appointments variable
-    appointments: {}
+    appointments: {},
+    interviewers: {}
   });
 
-  let dailyAppointments = [];
+  // let dailyAppointments = [];
 
 /* const setDays = (days) => {
    setState(prev => ({ ...prev, days }));
   } */
   // remove function 
   
+  const bookInterview = (id, interview) => {
+    console.log("id", id, interview);
+    const appointment = {
+      ...state.appointments[id],
+      interview: { ...interview }
+    };
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+    setState({
+      ...state,
+      appointments
+    });
+  }
+
   useEffect(() => {
     Promise.all([
       axios.get(`http://localhost:8001/api/days`),
@@ -89,19 +66,25 @@ export default function Application(props) {
   // console.log("state.day", state.day);
   console.log("state.interviewers", state.interviewers);
 
-  dailyAppointments = getAppointmentsForDay(state, state.day) 
-   const schedule = dailyAppointments.map((appointment) => (
-    // const interview = getInterview(state, appointment.interview);
+  const dailyAppointments = getAppointmentsForDay(state, state.day) 
+
+   const schedule = dailyAppointments.map(
+     (appointment) => {
+       const interview = getInterview(state, appointment.interview) 
+       const interviewers = getInterviewersForDay(state, state.day)
+      return (
           <Appointment 
             key={appointment.id}
-            id={appointment.id}
-            {...appointment} 
-            // time={appointment.time}
-            // interview={interview}
+            {...appointment}
+            interviewers={interviewers}
+            bookInterview={bookInterview}
+            time={appointment.time}
+            interview={interview}
           />
-      ));
+        );
+     });
 
-  console.log(dailyAppointments);
+  // console.log(dailyAppointments);
 
   return (
     <main className="layout">
@@ -109,7 +92,7 @@ export default function Application(props) {
         <img
           className="sidebar--centered"
           src="images/Logo.png"
-          alt="Interview Scheduler"
+          alt="Interview onCancel={() => back(EMPTY)}cheduler"
         />
         <hr className="sidebar__separator sidebar--centered" />
         <nav className="sidebar__menu">

@@ -8,7 +8,7 @@ export default function Form(props) {
   const [student, setStudent] = useState(props.student || "");
   const [interviewer, setInterviewer] = useState(props.interviewer || null);
 
-  console.log(props.student);
+  // console.log(props.student);
 
   const reset = () => {
     setStudent("");
@@ -39,6 +39,7 @@ export default function Form(props) {
         </form>
         <InterviewerList 
           interviewers={props.interviewers}
+          interviewer={props.interviewer}
           value={interviewer}
           onChange={setInterviewer}
           // from refactored controlled lists walkthrough
