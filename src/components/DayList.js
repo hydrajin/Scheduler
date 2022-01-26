@@ -5,7 +5,7 @@ import DayListItem from "./DayListItem";
 
 export default function DayList(props) {
   const { days } = props;
-  console.log("days:", days);
+  // console.log("days:", days);
   const parsedDays = days.map((day) =>
   // Each object in the days array contains all the information to populate one <DayListItem> component.
   // So, we can iterate over the days array and use its data to create a new array of <DayListItem> components which can be rendered in the <ul> of our <DayList>.

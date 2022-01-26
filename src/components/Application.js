@@ -33,11 +33,10 @@ export default function Application(props) {
       axios.get(`http://localhost:8001/api/interviewers`)
     ]).then((all) => {
       
-      console.log("DAY:", all[0]); // first
+/*       console.log("DAY:", all[0]); // first
       console.log("APPOINTMENTS:", all[1]); // second
-      console.log("INTERVIEWERS:", all[2]); // third
+      console.log("INTERVIEWERS:", all[2]); // third */
  
-
     const [days, appointments, interviewers] = all;
     setState(prev => ({...prev, days: days.data, appointments: appointments.data, interviewers: interviewers.data }))
     // console.log(first, second, third);
@@ -89,7 +88,7 @@ const cancelInterview = (id, interview) => {
   // console.log(day);
   // changes once we click on a certain day
   // console.log("state.day", state.day);
-  console.log("state.interviewers", state.interviewers);
+  // console.log("state.interviewers", state.interviewers);
 
   const dailyAppointments = getAppointmentsForDay(state, state.day) 
 

@@ -14,6 +14,7 @@ const CREATE = "CREATE";
 const SAVING = "SAVING";
 const DELETING = "DELETING";
 const CONFIRM = "CONFIRM";
+const EDIT = "EDIT";
 
 /* const appointments = [
   {
@@ -55,7 +56,6 @@ const CONFIRM = "CONFIRM";
 ]; */
 
 export default function Appointment(props) {
-
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
     );
@@ -88,17 +88,39 @@ export default function Appointment(props) {
      
       {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
       {mode === SHOW && (
-      <Show
-        student={props.interview.student}
-        interviewer={props.interview.interviewer}
-        onDelete={() => transition(CONFIRM)}
-        // transition to confirm selector before actual delete
+        <Show
+          student={props.interview.student}
+          interviewer={props.interview.interviewer}
+          onDelete={() => transition(CONFIRM)}
+          onEdit={() => transition(EDIT)}
         />
       )}
       {mode === SAVING && <Status message="Saving"/>}
-      {mode === CONFIRM && <Confirm message="Are you sure you would like to delete?" onConfirm={cancelInterview} onCancel={() => back()}/>}
+      {mode === CONFIRM && (
+        <Confirm 
+          message="Are you sure you would like to delete?" 
+          onConfirm={cancelInterview}
+          onCancel={() => back()}
+        />
+      )}
       {mode === DELETING && <Status message="Deleting"/>}
-      {mode === CREATE && <Form onCancel={() => back(EMPTY)} onSave={save} interviewers={props.interviewers}/>}
+      {mode === CREATE && (
+        <Form 
+          onCancel={() => back(EMPTY)} 
+          onSave={save}
+          interviewers={props.interviewers}
+        />
+      )}
+      {mode === EDIT && (
+        <Form
+          onCancel={() => back(SHOW)} 
+          onSave={save}
+          id={props.id}
+          name={props.interview.student}
+          interviewers={props.interviewers}
+          interviewer={props.interview.interviewer}
+        />
+      )}
     </article>
   );
 }
