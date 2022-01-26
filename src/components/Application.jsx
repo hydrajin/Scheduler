@@ -1,12 +1,9 @@
 import React from "react";
-// // import useState Hook
 import "components/Application.scss";
 import DayList from "components/DayList";
-// //import the DayList component into Application.js
 import Appointment from "components/Appointment";
 import useApplicationData from "hooks/useApplicationData";
-// import axios from "axios";
-// // import getAppointmentsForDays helpers function
+
 import {
   getAppointmentsForDay,
   getInterviewersForDay,
@@ -16,95 +13,8 @@ import {
 export default function Application(props) {
   const { state, setDay, bookInterview, cancelInterview } =
     useApplicationData();
-  //   const setDay = (day) => setState({ ...state, day });
-  //   const [state, setState] = useState({
-  //     day: "Monday",
-  //     days: [],
-  //     appointments: {},
-  //     interviewers: {},
-  //   });
+
   const interviewers = getInterviewersForDay(state, state.day);
-
-  //   // let dailyAppointments = [];
-
-  //   /* const setDays = (days) => {
-  //    setState(prev => ({ ...prev, days }));
-  //   } */
-  //   // remove function
-
-  //   useEffect(() => {
-  //     Promise.all([
-  //       axios.get(`http://localhost:8001/api/days`),
-  //       axios.get(`http://localhost:8001/api/appointments`),
-  //       axios.get(`http://localhost:8001/api/interviewers`),
-  //     ]).then((all) => {
-  //       /*       console.log("DAY:", all[0]); // first
-  //       console.log("APPOINTMENTS:", all[1]); // second
-  //       console.log("INTERVIEWERS:", all[2]); // third */
-
-  //       const [days, appointments, interviewers] = all;
-  //       setState((prev) => ({
-  //         ...prev,
-  //         days: days.data,
-  //         appointments: appointments.data,
-  //         interviewers: interviewers.data,
-  //       }));
-  //       // console.log(first, second, third);
-  //       // console.log(all);
-  //     });
-  //   }, []);
-
-  //   //! BOOK INTERVIEW  -------------------------------------------------------
-  //   const bookInterview = (id, interview) => {
-  //     console.log("id", id, interview);
-  //     const appointment = {
-  //       ...state.appointments[id],
-  //       interview: { ...interview },
-  //     };
-  //     const appointments = {
-  //       ...state.appointments,
-  //       [id]: appointment,
-  //     };
-  //     // Within bookInterview, make a PUT request to the /api/appointments/:id endpoint
-  //     // to update the database with the interview data.
-  //     return axios
-  //       .put(`http://localhost:8001/api/appointments/${id}`, { interview })
-  //       .then((response) => {
-  //         console.log("bookInterview", response);
-  //         // setState({...state, appointments})
-  //         setState((prev) => ({ ...prev, appointments }));
-  //       });
-  //   };
-  //   // If you want to delete the record in the db ->  http://localhost:8001/api/debug/reset (In browser) or do a curl command
-  //   //! CANCEL INTERVIEW -------------------------------------------------------
-  //   /* If we break this down into steps similar to our previous activity,
-  // we should start by creating the main cancelInterview function in Application.js,
-  // that will use the appointment id to find the right appointment slot and set it's interview data to null */
-  //   const cancelInterview = (id, interview) => {
-  //     const appointment = {
-  //       ...state.appointments[id],
-  //       interview: null,
-  //       // After we delete an Interview, we will need to have its value set to null (TypeError if not set)
-  //     };
-  //     const appointments = {
-  //       ...state.appointments,
-  //       [id]: appointment,
-  //     };
-  //     // Within bookInterview, make a PUT request to the /api/appointments/:id endpoint
-  //     // to update the database with the interview data.
-  //     return axios
-  //       .delete(`http://localhost:8001/api/appointments/${id}`)
-  //       .then((response) => {
-  //         console.log("cancelInterview", response);
-  //         // setState({...state, appointments}))
-  //         setState((prev) => ({ ...prev, appointments }));
-  //       });
-  //   };
-
-  // console.log(day);
-  // changes once we click on a certain day
-  // console.log("state.day", state.day);
-  // console.log("state.interviewers", state.interviewers);
 
   const dailyAppointments = getAppointmentsForDay(state, state.day);
 
@@ -116,14 +26,11 @@ export default function Application(props) {
         interviewers={interviewers}
         time={appointment.time}
         interview={getInterview(state, appointment.interview)}
-        // interview={interview}
         bookInterview={bookInterview}
         cancelInterview={cancelInterview}
       />
     );
   });
-
-  // console.log(dailyAppointments);
 
   return (
     <main className="layout">

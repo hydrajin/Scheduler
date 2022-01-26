@@ -11,23 +11,12 @@ export default function useApplicationData() {
 
   const setDay = (day) => setState((prev) => ({ ...prev, day }));
 
-  // let dailyAppointments = [];
-
-  /* const setDays = (days) => {
-   setState(prev => ({ ...prev, days }));
-  } */
-  // remove function
-
   useEffect(() => {
     Promise.all([
       axios.get(`http://localhost:8001/api/days`),
       axios.get(`http://localhost:8001/api/appointments`),
       axios.get(`http://localhost:8001/api/interviewers`),
     ]).then((all) => {
-      /*       console.log("DAY:", all[0]); // first
-      console.log("APPOINTMENTS:", all[1]); // second
-      console.log("INTERVIEWERS:", all[2]); // third */
-
       const [days, appointments, interviewers] = all;
       setState((prev) => ({
         ...prev,
@@ -35,8 +24,6 @@ export default function useApplicationData() {
         appointments: appointments.data,
         interviewers: interviewers.data,
       }));
-      // console.log(first, second, third);
-      // console.log(all);
     });
   }, []);
 
@@ -86,5 +73,5 @@ that will use the appointment id to find the right appointment slot and set it's
         setState((prev) => ({ ...prev, appointments }));
       });
   };
-  return { state, setDay, cancelInterview, bookInterview };
+  return { state, setDay, bookInterview, cancelInterview };
 }
