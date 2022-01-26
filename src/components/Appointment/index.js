@@ -5,6 +5,7 @@ import Empty from "./Empty";
 import Form from "./Form";
 import Status from "./Status"
 import Confirm from "./Confirm";
+import Error from "./Error";
 import "./styles.scss";
 import useVisualMode from "hooks/useVisualMode";
 
@@ -15,6 +16,8 @@ const SAVING = "SAVING";
 const DELETING = "DELETING";
 const CONFIRM = "CONFIRM";
 const EDIT = "EDIT";
+const ERROR_SAVE = "ERROR_SAVE";
+const ERROR_DELETE = "ERROR_DELETE";
 
 /* const appointments = [
   {
@@ -71,13 +74,15 @@ export default function Appointment(props) {
       props.bookInterview(props.id, interview)
       // only working with .then() returning a promise
       // pesimistic updates, we show the user an indicator for progress
-      .then(() => transition(SHOW));
+      .then(() => transition(SHOW))
+      .catch(error => transition(ERROR_SAVE));
     }
-    //! DELETE/CANCEL----------
+    //! DESTROY----------
     function cancelInterview() {
       transition(DELETING);
       props.cancelInterview(props.id)
       .then(() => transition(EMPTY))
+      .catch(error => transition(ERROR_DELETE));
     }
 
   return (
@@ -96,6 +101,7 @@ export default function Appointment(props) {
         />
       )}
       {mode === SAVING && <Status message="Saving"/>}
+      {mode === ERROR_SAVE && <Error message="Could not cancel appointment."/>}
       {mode === CONFIRM && (
         <Confirm 
           message="Are you sure you would like to delete?" 
@@ -104,6 +110,7 @@ export default function Appointment(props) {
         />
       )}
       {mode === DELETING && <Status message="Deleting"/>}
+      {mode === ERROR_SAVE && <Status message="Could not delete appointment."/>}
       {mode === CREATE && (
         <Form 
           onCancel={() => back(EMPTY)} 

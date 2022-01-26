@@ -60,7 +60,7 @@ export default function Application(props) {
     return axios.put(`http://localhost:8001/api/appointments/${id}`, {interview})
       .then(response => console.log("bookInterview", response),  
       setState({...state, appointments}))
-      .catch((err) => console.log(err));
+      .catch(error => console.log(error));
     }
     // If you want to delete the record in the db ->  http://localhost:8001/api/debug/reset (In browser) or do a curl command
 //! CANCEL INTERVIEW -------------------------------------------------------
