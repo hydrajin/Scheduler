@@ -115,10 +115,9 @@ export default function Appointment(props) {
         <Form
           onCancel={() => back(SHOW)} 
           onSave={save}
-          id={props.id}
-          name={props.interview.student}
+          student={props.interview.student}
           interviewers={props.interviewers}
-          interviewer={props.interview.interviewer}
+          interviewer={props.interview.interviewer.id}
         />
       )}
     </article>
