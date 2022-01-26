@@ -14,7 +14,6 @@ export default function Application(props) {
   const [state, setState] = useState({
     day: "Monday",
     days: [],
-    // you may put the line below, but will have to remove/comment hardcoded appointments variable
     appointments: {},
     interviewers: {}
   });
@@ -58,9 +57,12 @@ export default function Application(props) {
     // Within bookInterview, make a PUT request to the /api/appointments/:id endpoint
     // to update the database with the interview data.
     return axios.put(`http://localhost:8001/api/appointments/${id}`, {interview})
-      .then(response => console.log("bookInterview", response),  
-      setState({...state, appointments}))
-      .catch(error => console.log(error));
+      .then(response => {
+        console.log("bookInterview", response);
+        // setState({...state, appointments})
+        setState(prev => ({ ...prev, appointments }));
+      })
+      // .catch((error) => console.log(error));
     }
     // If you want to delete the record in the db ->  http://localhost:8001/api/debug/reset (In browser) or do a curl command
 //! CANCEL INTERVIEW -------------------------------------------------------
@@ -81,8 +83,9 @@ const cancelInterview = (id, interview) => {
   // to update the database with the interview data.
   return axios.delete(`http://localhost:8001/api/appointments/${id}`)
     .then(response => console.log("cancelInterview", response),  
-    setState({...state, appointments}))
-    .catch((err) => console.log(err));
+    // setState({...state, appointments}))
+    setState(prev => ({ ...prev, appointments }))
+    .catch((error) => console.log(error)));
   }
 
   // console.log(day);
