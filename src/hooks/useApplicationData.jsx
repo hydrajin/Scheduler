@@ -11,6 +11,14 @@ export default function useApplicationData() {
 
   const setDay = (day) => setState((prev) => ({ ...prev, day }));
 
+  //! UPDATE SPOTS  -------------------------------------------------------
+
+  const updateSpots = function (state, appointments, id) {
+    // return days array
+    return [];
+  };
+
+  //! AXIOS/AJAX REQUEST  -------------------------------------------------------
   useEffect(() => {
     Promise.all([
       axios.get(`http://localhost:8001/api/days`),
@@ -28,7 +36,7 @@ export default function useApplicationData() {
   }, []);
 
   //! BOOK INTERVIEW  -------------------------------------------------------
-  const bookInterview = (id, interview) => {
+  const bookInterview = async (id, interview) => {
     console.log("id", id, interview);
     const appointment = {
       ...state.appointments[id],
@@ -40,20 +48,20 @@ export default function useApplicationData() {
     };
     // Within bookInterview, make a PUT request to the /api/appointments/:id endpoint
     // to update the database with the interview data.
-    return axios
-      .put(`http://localhost:8001/api/appointments/${id}`, { interview })
-      .then((response) => {
-        console.log("bookInterview", response);
-        // setState({...state, appointments})
-        setState((prev) => ({ ...prev, appointments }));
-      });
+    const response = await axios.put(
+      `http://localhost:8001/api/appointments/${id}`,
+      { interview }
+    );
+    console.log("bookInterview", response);
+    // setState({...state, appointments})
+    setState((prev) => ({ ...prev, appointments }));
   };
   // If you want to delete the record in the db ->  http://localhost:8001/api/debug/reset (In browser) or do a curl command
   //! CANCEL INTERVIEW -------------------------------------------------------
   /* If we break this down into steps similar to our previous activity, 
-we should start by creating the main cancelInterview function in Application.js, 
-that will use the appointment id to find the right appointment slot and set it's interview data to null */
-  const cancelInterview = (id, interview) => {
+      we should start by creating the main cancelInterview function in Application.js, 
+      that will use the appointment id to find the right appointment slot and set it's interview data to null */
+  const cancelInterview = async (id) => {
     const appointment = {
       ...state.appointments[id],
       interview: null,
@@ -65,13 +73,12 @@ that will use the appointment id to find the right appointment slot and set it's
     };
     // Within bookInterview, make a PUT request to the /api/appointments/:id endpoint
     // to update the database with the interview data.
-    return axios
-      .delete(`http://localhost:8001/api/appointments/${id}`)
-      .then((response) => {
-        console.log("cancelInterview", response);
-        // setState({...state, appointments}))
-        setState((prev) => ({ ...prev, appointments }));
-      });
+    const response = await axios.delete(
+      `http://localhost:8001/api/appointments/${id}`
+    );
+    console.log("cancelInterview", response);
+    // setState({...state, appointments}))
+    setState((prev) => ({ ...prev, appointments }));
   };
   return { state, setDay, bookInterview, cancelInterview };
 }

@@ -14,7 +14,7 @@ export default function Form(props) {
     setStudent("");
     setInterviewer("");
   }
-  console.log(reset);
+  // console.log(reset);
   // When a user clicks the Cancel button, we use this function to clear the form values
 
   const cancel = () => {
