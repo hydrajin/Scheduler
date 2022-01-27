@@ -11,6 +11,30 @@ export default function useApplicationData() {
 
   const setDay = (day) => setState((prev) => ({ ...prev, day }));
 
+  //! UPDATE SPOTS  -------------------------------------------------------
+
+  // updateSpots.js (Gary)
+
+  const updateSpots = function (state, appointments, id) {
+    // Get the day Object
+    const dayObj = state.days.find((day) => day.name === state.day);
+    const spots = dayObj.appointments.filter(
+      (appointment) => !appointments[appointment].interview
+    ).length;
+    /*
+      dayObj.spots = spots; // We are mutating (changing original array)
+      same dayObj...
+      shallow copy!! We need deep copy!
+    */
+    console.log("spots=", spots);
+    const day = { ...dayObj, spots };
+
+    // return days array
+    return state.days.map((d) => (d.name === state.day ? day : d));
+    // if its a day you want stick in a new obj, if not use the orginal day
+  };
+
+  //! AXIOS/AJAX REQUEST  -------------------------------------------------------
   useEffect(() => {
     Promise.all([
       axios.get(`http://localhost:8001/api/days`),
@@ -44,8 +68,8 @@ export default function useApplicationData() {
       .put(`http://localhost:8001/api/appointments/${id}`, { interview })
       .then((response) => {
         console.log("bookInterview", response);
-        // setState({...state, appointments})
-        setState((prev) => ({ ...prev, appointments }));
+        const days = updateSpots(state, appointments);
+        setState((prev) => ({ ...prev, appointments, days }));
       });
   };
   // If you want to delete the record in the db ->  http://localhost:8001/api/debug/reset (In browser) or do a curl command
@@ -69,8 +93,8 @@ that will use the appointment id to find the right appointment slot and set it's
       .delete(`http://localhost:8001/api/appointments/${id}`)
       .then((response) => {
         console.log("cancelInterview", response);
-        // setState({...state, appointments}))
-        setState((prev) => ({ ...prev, appointments }));
+        const days = updateSpots(state, appointments, id);
+        setState((prev) => ({ ...prev, appointments, days }));
       });
   };
   return { state, setDay, bookInterview, cancelInterview };
