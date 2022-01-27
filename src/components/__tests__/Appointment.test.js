@@ -31,7 +31,7 @@ import Appointment from "components/Appointment";
 //! We will want to group related tests to organize our test suite as it grows.
 
 
-describe("Appointment", (props) => {
+describe("Appointment", () => {
   it("renders without crashing", () => {
     render(<Appointment />);
   });
