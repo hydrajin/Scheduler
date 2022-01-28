@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import Button from "components/Button";
 import InterviewerList from "../InterviewerList"
 
-
 export default function Form(props) {
 
   const [student, setStudent] = useState(props.student || "");
   const [interviewer, setInterviewer] = useState(props.interviewer || null);
+  const [error, setError] = useState("");
 
   // console.log(props.student);
 
@@ -14,7 +14,7 @@ export default function Form(props) {
     setStudent("");
     setInterviewer("");
   }
-  console.log(reset);
+  // console.log(reset);
   // When a user clicks the Cancel button, we use this function to clear the form values
 
   const cancel = () => {
@@ -23,6 +23,21 @@ export default function Form(props) {
   }
   //! Input field reset bug?
   // Add a cancel function to the Form component that calls reset() and props.onCancel.
+
+  // Add a validate function for testing
+  function validate() {
+    if (student === "") {
+      setError("Student name cannot be blank");
+      return;
+    }
+    if (!interviewer) {
+      setError("Interviewer cannot be blank");
+      return;
+    }
+    
+    setError("");
+    props.onSave(student, interviewer);
+  }
 
   return(
     <main className="appointment__card appointment__card--create">
@@ -33,9 +48,13 @@ export default function Form(props) {
             name="name"
             type="text"
             placeholder="Enter Student Name"
-            onChange={(event) => setStudent(event.target.value)}
             value={student}
+            onChange={event => { 
+              setStudent(event.target.value)
+            }}
+            data-testid="student-name-input"
           />
+          <section className="appointment__validation">{error}</section>
         </form>
         <InterviewerList 
           interviewers={props.interviewers}
@@ -49,7 +68,8 @@ export default function Form(props) {
         <section className="appointment__actions">
           <Button danger onClick={cancel}>Cancel</Button>
           {/* When cancel is pressed, the above cancel button is run */}
-          <Button onClick={() => props.onSave(student, interviewer)} >Save</Button>
+          {/* <Button onClick={() => props.onSave(student, interviewer)} >Save</Button> */}
+          <Button onClick={validate} >Save</Button>
         </section>
       </section>
     </main>

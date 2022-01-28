@@ -1,11 +1,12 @@
 import React from "react";
 import "components/InterviewerList.scss";
 import InterviewerListItem from "./InterviewerListItem";
+import PropTypes from "prop-types";
 /* interviewers:array - an array of objects as seen above
 setInterviewer:function - a function that accepts an interviewer id. This function will simply be passed down to the InterviewerListItem
 interviewer:number - a number that represents the id of the currently selected interviewer */
 
-export default function InterviewerList(props) {
+function InterviewerList(props) {
   let { interviewers } = props;
   const parsedInterviewers = interviewers.map((interviewer) => (
     // const interviewersProps = [];
@@ -28,3 +29,10 @@ export default function InterviewerList(props) {
     </section>
   );
 }
+
+// test to validate the interviewers props
+InterviewerList.propTypes = {
+  interviewers: PropTypes.array.isRequired,
+};
+
+export default InterviewerList;
