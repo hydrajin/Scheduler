@@ -20,11 +20,6 @@ import Appointment from "components/Appointment";
   A test that renders a React Component
 */
 
-/* it("renders without crashing", () => {
-  render(<Appointment />);
-});
- */
-
 // describe() vs it() vs test()
 
 //! describe: If we want to group a series of tests, we can wrap them all in a describe function.

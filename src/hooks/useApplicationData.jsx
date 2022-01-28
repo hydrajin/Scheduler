@@ -26,7 +26,6 @@ export default function useApplicationData() {
       same dayObj...
       shallow copy!! We need deep copy!
     */
-    console.log("spots=", spots);
     const day = { ...dayObj, spots };
 
     // return days array
@@ -53,7 +52,6 @@ export default function useApplicationData() {
 
   //! BOOK INTERVIEW  -------------------------------------------------------
   const bookInterview = (id, interview) => {
-    console.log("id", id, interview);
     const appointment = {
       ...state.appointments[id],
       interview: { ...interview },
@@ -67,7 +65,6 @@ export default function useApplicationData() {
     return axios
       .put(`http://localhost:8001/api/appointments/${id}`, { interview })
       .then((response) => {
-        console.log("bookInterview", response);
         const days = updateSpots(state, appointments);
         setState((prev) => ({ ...prev, appointments, days }));
       });
@@ -92,7 +89,6 @@ that will use the appointment id to find the right appointment slot and set it's
     return axios
       .delete(`http://localhost:8001/api/appointments/${id}`)
       .then((response) => {
-        console.log("cancelInterview", response);
         const days = updateSpots(state, appointments, id);
         setState((prev) => ({ ...prev, appointments, days }));
       });

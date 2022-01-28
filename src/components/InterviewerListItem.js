@@ -1,6 +1,5 @@
 import React from "react";
 import classNames from "classnames";
-// import classNames
 import "components/InterviewerListItem.scss";
 
 /* Four tasks:

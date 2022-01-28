@@ -25,7 +25,6 @@ export default function Appointment(props) {
     );
     //! SAVE----------
    function save(name, interviewer) {
-      // console.log(name, interviewer);
       const interview = {
         student: name,
         interviewer
@@ -51,8 +50,6 @@ export default function Appointment(props) {
   return (
     <article className="appointment">
       <Header time={props.time} />
-      {/* {props.interview ? <Show {...props.interview} /> : <Empty/>} */}
-      {/* ...spread should show student {props.interview.student} & interviewer {props.interview.interviewer} */}
       {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
       {mode === SAVING && <Status message="Saving"/>}
       {mode === ERROR_SAVE && <Error message="Could not cancel appointment." onClose={back}/>}
